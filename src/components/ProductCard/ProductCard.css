@@ -1,0 +1,119 @@
+.product-card {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-image {
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+  }
+  
+  .product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover .product-image img {
+    transform: scale(1.05);
+  }
+  
+  .product-actions {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    /* gap: 7px; */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: bottom 0.3s ease;
+  }
+  
+  .product-card:hover .product-actions {
+    bottom: 0;
+  }
+  
+  .product-info {
+    padding: 15px;
+  }
+  
+  .product-name h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-text-dark);
+  }
+  
+  .product-price {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .current-price {
+    font-weight: bold;
+    color: var(--color-primary);
+    font-size: 1.2em;
+  }
+  
+  .old-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+  }
+  
+  .description {
+    color: var(--color-text-dark);
+    font-size: 0.9em;
+    margin: 10px 0 15px;
+  }
+  
+  .action-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background: rgb(252, 12, 12);
+    color: var(--color-text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-button:hover {
+    background: var(--color-accent);
+  }
+  
+  .action-button.wishlist {
+    background: transparent;
+    color: var(--color-primary);
+    padding: 8px;
+  }
+  
+  .action-button.wishlist:hover {
+    color: var(--color-accent);
+  }
+  
+  .action-button.wishlist.active {
+    color: #ff4444;
+  }
+  
+  .action-button.wishlist.active:hover {
+    color: #ff6666;
+  }

@@ -1,0 +1,66 @@
+.order-confirmation {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+}
+
+.confirmation-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.order-number {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin: 1rem 0;
+}
+
+.order-details {
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.payment-instructions {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.payment-instructions ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.payment-instructions li {
+  margin: 0.5rem 0;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.home-button,
+.shop-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.home-button {
+  background: var(--color-primary);
+  color: white;
+}
+
+.shop-button {
+  background: #f0f0f0;
+  color: #333;
+}

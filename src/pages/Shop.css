@@ -1,0 +1,23 @@
+.shop {
+  padding: 40px 20px;
+}
+
+.shop-controls {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.shop-controls select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  min-width: 200px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+}

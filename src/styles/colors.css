@@ -1,0 +1,11 @@
+:root {
+  --color-primary: #003366;      /* Navy - Main color */
+  --color-accent: #13860f;       /* Soft Coral - CTA and highlights */
+  --color-background: #fce9fc;    /* White - Main background */
+  --color-text-light: #F7F7F7;   /* Light Gray - Text on dark backgrounds */
+  --color-text-dark: #333333;    /* Dark Gray - Text on light backgrounds */
+  --color-border: #EEEEEE;       /* Light Border */
+  --color-hover: #f1e53a;        /* Hover state color */
+  --overlay-dark: rgba(0, 51, 102, 0.7);  /* Navy overlay */
+  --overlay-light: rgba(247, 247, 247, 0.9); /* Light overlay */
+}

@@ -68,7 +68,7 @@
   .current-price {
     font-weight: bold;
     color: var(--color-primary);
-    font-size: 1.2em;
+    font-size: 1.1rem;
   }
   
   .old-price {

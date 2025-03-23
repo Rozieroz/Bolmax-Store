@@ -2,50 +2,120 @@
 
 .hero-section {
   text-align: center;
-  padding: 80px 20px;
-  background: var(--color-primary);
+  padding: 0;
   color: var(--color-text-light);
   position: relative;
   border-radius: 5px;
+  height: 500px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Prevents GIF from tiling */
+}
+  
+/* Optimize GIF performance */
+.hero-section[style*="hero-animation.gif"] {
+  /* Optional: Add a subtle filter to improve text visibility if needed */
+  /* filter: brightness(0.9); */ /* Uncomment if GIF is too bright */
+  background-size: 100% 100%; /* Change to contain to show the full GIF */
+  background-color: #5d66ee; /* Fallback background color */
+}
+  
+/* Ensure the CTA button is properly positioned with GIF background */
+.hero-content {
+  position: relative;
+  z-index: 2; /* Keep content above any overlay */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+  
+/* Responsive adjustments for GIF background */
+@media (max-width: 768px) {
+  .hero-section {
+    background-position: center center; /* Center the GIF on mobile */
+  }
 }
 
-.hero::after {
+.hero-section::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--overlay-dark);
+  /* background: rgba(206, 200, 200, 0.4); */
   z-index: 1;
 }
 
-.hero-content {
+/* .hero-content {
   position: relative;
   z-index: 2;
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 60px 20px;
+} */
 
-.hero-content h1 {
+/* .hero-content h1 {
   font-size: 3em;
   margin-bottom: 20px;
   color: var(--color-text-light);
 }
 
 .hero-content p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-    color: var(--color-text-light);
-}
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  color: var(--color-text-light);
+} */
 
 .cta-button {
-  display: inline-block;
+  display: flex; /* Changed from inline-block to flex for better centering */
   padding: 15px 30px;
-  background: var(--color-accent);
+  background: linear-gradient(135deg, var(--color-accent), #ff8a65);
   color: var(--color-text-light);
-  border-radius: 5px;
+  border-radius: 30px; /* More rounded corners */
   text-decoration: none;
-  margin-top: 20px;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  margin-top: 430px;
+  margin-bottom: 40px;
+  width: 20rem;
+  height: 5rem;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-button:hover {
+  transform: translateY(-5px) scale(1.03);
+  background: linear-gradient(135deg, #ff8a65, var(--color-accent));
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+  letter-spacing: 2px;
+}
+
+.cta-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+  /* text-align: center; */
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .cta-button:hover {
@@ -55,35 +125,35 @@
 }
 
 #featured .section-header {
-  background: linear-gradient(to right,rgb(80, 200, 120),rgb(179, 60, 60));
+  background: linear-gradient(to right, #507ac8, #b33c3c);
   color: white;
 }
 
 #popular .section-header {
-  background: linear-gradient(to right,rgb(200, 198, 80),rgb(60, 102, 179));
+  background: linear-gradient(to right, #50c878, #b33cb3);
   color: white;
   
 }
 
 #latest .section-header {
-  background: linear-gradient(to right,rgb(155, 89, 182),rgb(71, 173, 68));
+  background: linear-gradient(to right, #9b59b6, #ad7c44);
   color: white;
 }
 
-#deals .section-header {
-  background: linear-gradient(to right,rgb(231, 76, 60),rgb(157, 43, 192));
+#categories .section-header {
+  background: linear-gradient(to right, #e74c3c, #c0be2b);
   color: white;
 }
 
 #clearance .section-header {
-  background: linear-gradient(to right,rgb(243, 156, 18),rgb(0, 211, 183));
+  background: linear-gradient(to right, #12f343, #d30069);
   color: white;
 }
 
-#featured .section-header, #popular .section-header, #latest .section-header, #deals .section-header,
+#featured .section-header, #popular .section-header, #latest .section-header, #categories .section-header,
 #clearance .section-header {
   align-items: center;
-  margin-bottom: 1px;
+  margin-bottom: 1rem;
   padding: 1rem 2rem;
   border-radius: 8px 8px 0 0;
 }
@@ -111,28 +181,8 @@
 }
 
 
-
-
-
-/* .view-product {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: var(--color-primary);
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  margin-top: 1rem;
-} */
-
-.view-product:hover {
-  background: navy;
-  color: rgb(69, 224, 90);
-}
-
-
 /* Categories Section */
 .categories {
-  padding: 60px 20px;
   background: var(--color-text-light);
 }
 
@@ -374,7 +424,7 @@
 
 
 /* Product Sections */
-.product-section, .deals, .clearance {
+.product-section, .categories, .clearance {
   margin: 1rem 0;
   background: var(--color-background);
   border-radius: 8px;  
@@ -415,7 +465,8 @@
 }
 
 .products-scroll {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
   padding: 1rem;
   overflow-x: auto;
@@ -436,7 +487,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   position: relative;
-  line-height: 1;
 }
 
 .product-card:hover {
@@ -461,14 +511,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.5rem 0;
-}
-
-.original-price {
-  color: #999;
-  text-decoration: line-through;
-  font-size: 0.9rem;
-  text-align: right;
+  margin: 0.1rem 0;
 }
 
 .price {
@@ -489,16 +532,60 @@
   font-weight: bold;
 }
 
-/* Apply the same styling to featured items */
-.original-price {
-  color: #999;
-  text-decoration: line-through;
-  font-size: 0.9rem;
-  text-align: right;
+/* Category Cards Styling */
+.category-card {
+  min-width: 220px;
+  margin: 0 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.price {
-  color: var(--color-primary);
-  font-weight: bold;
-  font-size: 1.1rem;
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
+.category-image {
+  height: 180px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.category-card:hover .category-image img {
+  transform: scale(1.1);
+}
+
+.category-card h3 {
+  padding: 12px;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  margin: 0;
+}
+
+/* Make sure the products-scroll container in categories section has proper styling */
+#categories .products-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px 0;
+  -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
+
+#categories .products-scroll::-webkit-scrollbar {
+  display: none;  /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+

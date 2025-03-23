@@ -8,6 +8,7 @@ A modern e-commerce platform built with React, offering a seamless shopping expe
 
 ### Current
 - 📱 Responsive design for all devices
+- 🎨 Engaging animated hero section with eye-catching CTA
 - 🛍️ Intuitive product browsing by categories
 - 🔍 Smart search functionality
 - 🛒 Shopping cart management
@@ -16,6 +17,7 @@ A modern e-commerce platform built with React, offering a seamless shopping expe
 - 📦 Multiple delivery options
 - Recently viewed products
 - Similar products suggestions
+- Enhanced UI
 
 ### Coming Soon
 - Order tracking system

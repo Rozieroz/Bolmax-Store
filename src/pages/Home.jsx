@@ -1,18 +1,75 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { products } from '../data/products'  // Import products data
 import ProductCard from '../components/ProductCard/ProductCard' // Import ProductCard component
 import './Home.css'
 
-const Home = () => {
-  // Get first 5 products for featured section
-  const featuredProducts = products.slice(0, 5);
+// Import category images
+import kitchenImg from '../assets/categories/kitchen-appliances.jpg'
+import tvImg from '../assets/categories/TV.jpg'
+import appliancesImg from '../assets/categories/washing-machine.jpg'
+import homeLivingImg from '../assets/categories/home-living.jpg'
+import lightingImg from '../assets/categories/light-bulb-lamp.jpg'
+import computingImg from '../assets/categories/laptop.jpg'
+import fashionImg from '../assets/categories/fashion.jpg'
 
-  // Filter products with high discounts for best deals section
-  const bestDealsProducts = products.filter(product => {
-    const discountPercentage = product.oldPrice ? ((product.oldPrice - product.price) / product.oldPrice) * 100 : 0;
-    return discountPercentage >= 10; // Adjust the percentage as needed
-  });
+//  hero image and gif
+import heroImg from '../assets/hero-image.png'
+import heroGif from '../assets/hero-animation.gif'
+
+const Home = () => {
+  // Logic for featured products - using a combination of factors
+  const featuredProducts = products
+    .filter(product => {
+      // Check for featured criteria
+      const hasHighRating = product.rating && product.rating >= 4.5;
+      const isPopular = product.reviews && product.reviews > 50;
+      const isPromoted = product.featured === true; // If you have a featured flag
+      const hasDiscount = product.oldPrice && ((product.oldPrice - product.price) / product.oldPrice) * 100 >= 10;
+      
+      // Product qualifies if it meets at least two of these conditions
+      let qualificationCount = 0;
+      if (hasHighRating) qualificationCount++;
+      if (isPopular) qualificationCount++;
+      if (isPromoted) qualificationCount++;
+      if (hasDiscount) qualificationCount++;
+      
+      return qualificationCount >= 1;
+    })
+    .slice(0, 8); // Limit to 8 products
+ 
+  // For latest products - creating a set of IDs to avoid repetition
+  const latestProducts = products.slice(12, 20);
+  const latestProductIds = new Set(latestProducts.map(product => product.id));
+  
+  // logic for clearance products - using a combination of factors
+  const finalClearanceProducts = products
+    .filter(product => {
+      // Don't include products that are already in latest products
+      if (latestProductIds.has(product.id)) return false;
+      
+      // Check for specific clearance criteria
+      const discountPercentage = product.oldPrice ? ((product.oldPrice - product.price) / product.oldPrice) * 100 : 0;
+      const isLimitedStock = product.stock && product.stock < 20; // Limited stock check
+      const isEndOfSeason = product.seasonal === 'ending'; // If you have seasonal tags
+      const isOlderProduct = product.id < 100; // Assuming lower IDs are older products
+      
+      // Product qualifies if it meets at least one of these conditions with a discount
+      return discountPercentage >= 15 && (isLimitedStock || isEndOfSeason || isOlderProduct);
+    })
+    .slice(0, 8);
+
+  // Fallback if not enough products match our criteria
+  const finalSpecialProducts = finalClearanceProducts.length >= 4 ? 
+    finalClearanceProducts : 
+    products
+      .filter(product => !latestProductIds.has(product.id))
+      .sort((a, b) => {
+        const discountA = a.oldPrice ? ((a.oldPrice - a.price) / a.oldPrice) * 100 : 0;
+        const discountB = b.oldPrice ? ((b.oldPrice - b.price) / b.oldPrice) * 100 : 0;
+        return discountB - discountA; // Sort by highest discount first
+      })
+      .slice(0, 8);
 
   // Scroll handler function
   const handleScroll = (direction, sectionId) => {
@@ -294,10 +351,12 @@ const Home = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="hero-section">
+      {/* <section className="hero-section" style={{ backgroundImage: `url(${heroImg})` }}> */}
+      {/* Using GIF as background */}
+      
+      <section className="hero-section" style={{ backgroundImage: `url(${heroGif})` }}>
         <div className="hero-content">
-          <h1>Welcome to Bolmax Enterprises</h1>
-          <p>Discover our amazing products</p>
+          
           <Link to="/shop" className="cta-button">Shop Now</Link>
         </div>
       </section>
@@ -374,34 +433,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Best Deals Section */}
-      <section id="deals" className="product-section deals">
-        <div className="section-header">
-          <h2>Best Deals</h2>
-          <div className="scroll-buttons">
-            <button 
-              className="scroll-btn prev" 
-              onClick={() => handleScroll('left', 'deals')}
-              aria-label="Scroll left"
-            >‹</button>
-            <button 
-              className="scroll-btn next" 
-              onClick={() => handleScroll('right', 'deals')}
-              aria-label="Scroll right"
-            >›</button>
-          </div>
-        </div>
-        <div className="products-scroll">
-          {bestDealsProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
-
-      {/* Clearance Sale Section */}
+      {/* Special Offers Section */}
       <section id="clearance" className="product-section clearance">
         <div className="section-header">
-          <h2>Clearance Sale</h2>
+          <h2>Special Offers</h2>
           <div className="scroll-buttons">
             <button 
               className="scroll-btn prev" 
@@ -416,11 +451,91 @@ const Home = () => {
           </div>
         </div>
         <div className="products-scroll">
-          {products.slice(28, 36).map(product => (
+          {finalSpecialProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
+
+      {/* Shop by Category */}
+      <section id="categories" className="product-section categories">
+        <div className="section-header">
+          <h2>Shop by Category</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'categories')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'categories')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
+          {/* Category cards using imported images */}
+          <div className="category-card">
+            <Link to="/category/kitchen-appliances">
+              <div className="category-image">
+                <img src={kitchenImg} alt="Kitchen Appliances" />
+              </div>
+              <h3>Kitchen Appliances</h3>
+            </Link>
+          </div>
+          <div className="category-card">
+            <Link to="/category/electronics">
+              <div className="category-image">
+                <img src={tvImg} alt="Electronics" />
+              </div>
+              <h3>TVs & Electronics</h3>
+            </Link>
+          </div>
+          <div className="category-card">
+            <Link to="/category/appliances">
+              <div className="category-image">
+                <img src={appliancesImg} alt="Home Appliances" />
+              </div>
+              <h3>Home Appliances</h3>
+            </Link>
+          </div>
+          <div className="category-card">
+            <Link to="/category/home-living">
+              <div className="category-image">
+                <img src={homeLivingImg} alt="Home & Living" />
+              </div>
+              <h3>Home & Living</h3>
+            </Link>
+          </div>
+          <div className="category-card">
+            <Link to="/category/lighting-outdoor">
+              <div className="category-image">
+                <img src={lightingImg} alt="Lighting & Outdoor" />
+              </div>
+              <h3>Lighting & Outdoor</h3>
+            </Link>
+          </div>
+          <div className="category-card">
+            <Link to="/category/computing">
+              <div className="category-image">
+                <img src={computingImg} alt="Computing" />
+              </div>
+              <h3>Computing</h3>
+            </Link>
+          </div>
+          <div className="category-card">
+            <Link to="/category/fashion">
+              <div className="category-image">
+                <img src={fashionImg} alt="Fashion" />
+              </div>
+              <h3>Fashion</h3>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      
     </div>
   )
 }

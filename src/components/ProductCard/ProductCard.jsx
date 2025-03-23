@@ -47,8 +47,13 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="product-price">
           <span className="current-price">KSH {product.price.toFixed(2)}</span>
-          {product.oldPrice && (
-            <span className="old-price">KSH {product.oldPrice.toFixed(2)}</span>
+          {product.oldPrice && product.oldPrice > product.price && (
+            <>
+              <span className="old-price">KSH {product.oldPrice.toFixed(2)}</span>
+              <span className="discount-badge">
+                -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+              </span>
+            </>
           )}
         </div>
         {product.rating && (

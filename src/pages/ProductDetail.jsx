@@ -64,6 +64,18 @@ const ProductDetail = () => {
     }
   };
 
+  const handleScroll = (direction, sectionId) => {
+    const container = document.querySelector(`#${sectionId} .products-scroll`);
+    const scrollAmount = 800;
+    if (container) {
+      if (direction === 'left') {
+        container.scrollLeft -= scrollAmount;
+      } else {
+        container.scrollLeft += scrollAmount;
+      }
+    }
+  };
+
   if (!product) return <div>Loading...</div>;
 
   return (
@@ -106,9 +118,23 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="similar-products">
-        <h2>Similar Products</h2>
-        <div className="products-slider">
+      <div id="similar" className="similar-products">
+        <div className="section-header">
+          <h2>Similar Products</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'similar')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'similar')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
           {similarProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -116,9 +142,23 @@ const ProductDetail = () => {
       </div>
 
       {recentlyViewed.length > 0 && (
-        <div className="recently-viewed">
-          <h2>Recently Viewed</h2>
-          <div className="products-grid">
+        <div id="recent" className="recently-viewed">
+          <div className="section-header">
+            <h2>Recently Viewed</h2>
+            <div className="scroll-buttons">
+              <button 
+                className="scroll-btn prev" 
+                onClick={() => handleScroll('left', 'recent')}
+                aria-label="Scroll left"
+              >‹</button>
+              <button 
+                className="scroll-btn next" 
+                onClick={() => handleScroll('right', 'recent')}
+                aria-label="Scroll right"
+              >›</button>
+            </div>
+          </div>
+          <div className="products-scroll">
             {recentlyViewed.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}

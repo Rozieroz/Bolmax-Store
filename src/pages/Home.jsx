@@ -1,11 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { products } from '../data/products'  // Import products data
+import ProductCard from '../components/ProductCard/ProductCard' // Import ProductCard component
 import './Home.css'
 
 const Home = () => {
-  // Get first 4 products for featured section
-  const featuredProducts = products.slice(0, 4);
+  // Get first 5 products for featured section
+  const featuredProducts = products.slice(0, 5);
+
+  // Filter products with high discounts for best deals section
+  const bestDealsProducts = products.filter(product => {
+    const discountPercentage = product.oldPrice ? ((product.oldPrice - product.price) / product.oldPrice) * 100 : 0;
+    return discountPercentage >= 10; // Adjust the percentage as needed
+  });
+
+  // Scroll handler function
+  const handleScroll = (direction, sectionId) => {
+    const container = document.querySelector(`#${sectionId} .products-scroll`);
+    const scrollAmount = 800; // Adjust this value based on your needs
+    if (container) {
+      if (direction === 'left') {
+        container.scrollLeft -= scrollAmount;
+      } else {
+        container.scrollLeft += scrollAmount;
+      }
+    }
+  };
 
   return (
     <div className="home">
@@ -283,21 +303,121 @@ const Home = () => {
       </section>
 
       {/* Featured Products Section */}
-      <section className="featured">
-        <h2>Featured Products</h2>
-        <div className="featured-grid">
+      <section id="featured" className="product-section">
+        <div className="section-header">
+          <h2>Featured Products</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'featured')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'featured')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
           {featuredProducts.map(product => (
-            <div key={product.id} className="featured-item">
-              <Link to={`/product/${product.id}`}>
-                <img src={product.image} alt={product.name} />
-                <h3>{product.name}</h3>
-                <p className="price">Ksh {product.price.toFixed(2)}</p>
-                
-                {/* <Link to={`/product/${product.id}`} className="view-product">
-                  View Details
-                </Link> */}
-              </Link>
-            </div>
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* Popular Products Section */}
+      <section id="popular" className="product-section">
+        <div className="section-header">
+          <h2>Popular Products</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'popular')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'popular')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
+          {products.slice(1, 12).map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* Latest Products Section */}
+      <section id="latest" className="product-section">
+        <div className="section-header">
+          <h2>Latest Arrivals</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'latest')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'latest')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
+          {products.slice(12, 20).map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* Best Deals Section */}
+      <section id="deals" className="product-section deals">
+        <div className="section-header">
+          <h2>Best Deals</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'deals')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'deals')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
+          {bestDealsProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* Clearance Sale Section */}
+      <section id="clearance" className="product-section clearance">
+        <div className="section-header">
+          <h2>Clearance Sale</h2>
+          <div className="scroll-buttons">
+            <button 
+              className="scroll-btn prev" 
+              onClick={() => handleScroll('left', 'clearance')}
+              aria-label="Scroll left"
+            >‹</button>
+            <button 
+              className="scroll-btn next" 
+              onClick={() => handleScroll('right', 'clearance')}
+              aria-label="Scroll right"
+            >›</button>
+          </div>
+        </div>
+        <div className="products-scroll">
+          {products.slice(28, 36).map(product => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>

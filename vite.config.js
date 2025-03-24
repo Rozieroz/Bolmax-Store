@@ -8,5 +8,11 @@ export default defineConfig({
       protocol: 'ws',
       host: 'localhost'
     }
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+      strictRequires: true
+    }
   }
 })
